@@ -1,6 +1,6 @@
 {
   name: 'client',
-  entry: ['babel-polyfill', 'whatwg-fetch', './src/client/client'],
+  entry: ['babel-polyfill', 'whatwg-fetch', './src'],
   output: {
     filename: 'client.js',
     path: path.join(__dirname, STATIC_DIR),

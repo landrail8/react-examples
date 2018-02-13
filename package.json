@@ -4,7 +4,9 @@
   "description": "react examples",
   "main": "index.js",
   "dependencies": {
-    "react": "^16.2.0"
+    "babel-polyfill": "^6.26.0",
+    "react": "^16.2.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
