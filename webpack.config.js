@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   name: 'client',
-  entry: ['babel-polyfill', 'whatwg-fetch', './src'],
+  entry: ['babel-polyfill', 'whatwg-fetch', './src/client'],
   output: {
     filename: 'client.js',
     path: path.join(__dirname, 'static'),
