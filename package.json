@@ -1,0 +1,31 @@
+{
+  "name": "react-examples",
+  "version": "0.1.1",
+  "description": "react examples",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^16.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "webpack": "^3.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/landrail8/react-examples.git"
+  },
+  "keywords": [
+    "react-examples"
+  ],
+  "author": "landrail",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/landrail8/react-examples/issues"
+  },
+  "homepage": "https://github.com/landrail8/react-examples#readme"
+}
