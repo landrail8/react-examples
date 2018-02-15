@@ -6,6 +6,8 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -14,7 +16,10 @@
     "webpack": "^3.11.0"
   },
   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "eject": "react-scripts eject",
     "watch": "webpack --watch"
   },
   "repository": {
