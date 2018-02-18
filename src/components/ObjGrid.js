@@ -8,9 +8,9 @@ const ObjGrid = (props) => {
 
   return (
     <div>
-      <h1>{grid.nameGrid}</h1>
+      <h2>{grid.nameGrid}</h2>
       {gridElems}
-      <h3>Creation date: {(new Date()).toDateString()}</h3>
+      <h4>Creation date: {(new Date()).toDateString()}</h4>
     </div>
   )
 }

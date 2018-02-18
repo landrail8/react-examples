@@ -1,13 +1,18 @@
 
 import React from 'react';
-import ObjGrid from './ObjGrid';
 import dataSet from '../getData';
+import ObjGrid from './ObjGrid';
+import SelectionColumns from './SelectionColumns';
+//import SortableTable from './SortableTable';
 
-const App = () => {
-  return (
-    <div>
-      <ObjGrid grid = {dataSet()} />
-    </div>
-  )
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <SelectionColumns grid = {dataSet()} />
+        <ObjGrid grid = {dataSet()} /> 
+      </div>
+    )
+  }
 }
 export default App;
