@@ -27704,11 +27704,11 @@ var _react = __webpack_require__(51);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _getData = __webpack_require__(358);
+var _getData = __webpack_require__(357);
 
 var _getData2 = _interopRequireDefault(_getData);
 
-var _ObjGrid = __webpack_require__(357);
+var _ObjGrid = __webpack_require__(358);
 
 var _ObjGrid2 = _interopRequireDefault(_ObjGrid);
 
@@ -27741,8 +27741,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_SelectionColumns2.default, { grid: (0, _getData2.default)() }),
-        _react2.default.createElement(_ObjGrid2.default, { grid: (0, _getData2.default)() })
+        _react2.default.createElement(_SelectionColumns2.default, { grid: (0, _getData2.default)() })
       );
     }
   }]);
@@ -27754,57 +27753,6 @@ exports.default = App;
 
 /***/ }),
 /* 357 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(51);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ObjGrid = function ObjGrid(props) {
-  var grid = props.grid;
-
-
-  var gridElems = grid.arr.map(function (elem) {
-    return _react2.default.createElement(
-      'li',
-      null,
-      elem.id,
-      ' : ',
-      elem.name
-    );
-  });
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h2',
-      null,
-      grid.nameGrid
-    ),
-    gridElems,
-    _react2.default.createElement(
-      'h4',
-      null,
-      'Creation date: ',
-      new Date().toDateString()
-    )
-  );
-};
-
-exports.default = ObjGrid;
-
-/***/ }),
-/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27859,6 +27807,57 @@ exports.default = function () {
 };
 
 /***/ }),
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(51);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ObjGrid = function ObjGrid(props) {
+  var grid = props.grid;
+
+
+  var gridElems = grid.arr.map(function (elem) {
+    return _react2.default.createElement(
+      'li',
+      null,
+      elem.id,
+      ' : ',
+      elem.name
+    );
+  });
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h2',
+      null,
+      grid.nameGrid
+    ),
+    gridElems,
+    _react2.default.createElement(
+      'h4',
+      null,
+      'Creation date: ',
+      new Date().toDateString()
+    )
+  );
+};
+
+exports.default = ObjGrid;
+
+/***/ }),
 /* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27883,6 +27882,42 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var ObjGrid = function ObjGrid(props) {
+  var grid = props.grid;
+
+
+  var gridElems = grid.arr.map(function (elem) {
+    return _react2.default.createElement(
+      "li",
+      null,
+      elem.id,
+      " : ",
+      elem.name
+    );
+  });
+
+  return _react2.default.createElement(
+    "div",
+    null,
+    _react2.default.createElement(
+      "h2",
+      null,
+      grid.nameGrid
+    ),
+    gridElems,
+    _react2.default.createElement(
+      "h4",
+      null,
+      "Creation date: ",
+      new Date().toDateString()
+    )
+  );
+};
+
+var getColumns = function getColumns(arr) {
+  return Object.keys(arr[0]);
+};
+
 var SelectionColumns = function (_React$Component) {
   _inherits(SelectionColumns, _React$Component);
 
@@ -27892,12 +27927,23 @@ var SelectionColumns = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SelectionColumns.__proto__ || Object.getPrototypeOf(SelectionColumns)).call(this, props));
 
     _this.handleCheckBox = _this.handleCheckBox.bind(_this);
+
+    var grid = props.grid;
+
+
+    var objCheckBoxGroup = getColumns(grid).reduce(function (acc, curr) {
+      acc[curr] = true;
+      return acc;
+    }, {});
+
     _this.state = {
-      CheckBoxGroup: {
-        id: true,
+      CheckBoxGroup: objCheckBoxGroup
+
+      /*{
+         id: true,
         name: true,
         GDP: false
-      }
+      }*/
     };
     return _this;
   }
@@ -27905,7 +27951,7 @@ var SelectionColumns = function (_React$Component) {
   _createClass(SelectionColumns, [{
     key: "handleCheckBox",
     value: function handleCheckBox(event) {
-      var object = {};
+      var object = Object.assign(this.state.CheckBoxGroup);
       object[event.target.value] = event.target.checked;
       this.setState({ CheckBoxGroup: object });
     }
@@ -27915,12 +27961,16 @@ var SelectionColumns = function (_React$Component) {
       return _react2.default.createElement(
         "form",
         null,
-        _react2.default.createElement("input", {
-          type: "checkbox",
-          value: "id",
-          checked: this.state.CheckBoxGroup.id,
-          onChange: this.handleCheckBox
-        }),
+        _react2.default.createElement(
+          "label",
+          null,
+          _react2.default.createElement("input", {
+            type: "checkbox",
+            value: "id",
+            checked: this.state.CheckBoxGroup.id,
+            onChange: this.handleCheckBox
+          })
+        ),
         _react2.default.createElement("input", {
           type: "checkbox",
           value: "name",

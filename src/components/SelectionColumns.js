@@ -1,20 +1,47 @@
 import React from 'react';
 
+const ObjGrid = (props) => {
+  const {grid} = props;
+
+  const gridElems = grid.arr.map(elem => <li>{elem.id} : {elem.name}</li>);
+
+  return (
+    <div>
+      <h2>{grid.nameGrid}</h2>
+      {gridElems}
+      <h4>Creation date: {(new Date()).toDateString()}</h4>
+    </div>
+  )
+}
+
+const getColumns = (arr) => Object.keys(arr[0]);
+
 class SelectionColumns extends React.Component {
   constructor(props) {
     super(props);
     this.handleCheckBox = this.handleCheckBox.bind(this);
+
+    const {grid} = props;
+
+    const objCheckBoxGroup = getColumns(grid).reduce((acc, curr) => {
+      acc[curr] = true;
+      return acc;
+    }, {});
+
     this.state = {
-      CheckBoxGroup: {
+      CheckBoxGroup: objCheckBoxGroup
+
+      /*{
+
         id: true,
         name: true,
         GDP: false
-      }
+      }*/
     }
   }
 
   handleCheckBox(event) {
-    let object = {};
+    let object = Object.assign(this.state.CheckBoxGroup);
     object[event.target.value] = event.target.checked;
     this.setState({CheckBoxGroup: object});
   }
@@ -22,12 +49,18 @@ class SelectionColumns extends React.Component {
   render() {
     return (
       <form>
-        <input
-          type = "checkbox"
-          value = "id"
-          checked = {this.state.CheckBoxGroup.id}
-          onChange = {this.handleCheckBox}
-        />
+
+
+        <label>
+          <input
+            type = "checkbox"
+            value = "id"
+            checked = {this.state.CheckBoxGroup.id}
+            onChange = {this.handleCheckBox}
+          />
+        </label>
+
+
         <input
           type = "checkbox"
           value = "name"

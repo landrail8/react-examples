@@ -9,8 +9,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <SelectionColumns grid = {dataSet()} />
-        <ObjGrid grid = {dataSet()} /> 
+        <SelectionColumns grid = {dataSet()} /> 
       </div>
     )
   }
