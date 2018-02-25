@@ -1,20 +1,16 @@
 import React from 'react';
 
-const ObjGrid = (props) => {
-  const {grid} = props;
-
-  const gridElems = grid.arr.map(elem => <li>{elem.id} : {elem.name}</li>);
-
-  return (
-    <div>
-      <h2>{grid.nameGrid}</h2>
-      {gridElems}
-      <h4>Creation date: {(new Date()).toDateString()}</h4>
-    </div>
-  )
-}
-
 const getColumns = (arr) => Object.keys(arr[0]);
+
+const TableRow = ({row, columnsObj}) => (
+  <tr>
+    {Object.keys(columnsObj).filter(curr => columnsObj[curr]).map((curr) => {
+      return (
+        <td key={ row[curr] }>{ row[curr] }</td>
+      )
+    })}
+  </tr>
+)
 
 class SelectionColumns extends React.Component {
   constructor(props) {
@@ -23,57 +19,53 @@ class SelectionColumns extends React.Component {
 
     const {grid} = props;
 
-    const objCheckBoxGroup = getColumns(grid).reduce((acc, curr) => {
+    this.CheckBoxElems = getColumns(grid.arr);
+
+    const objCheckBoxGroup = getColumns(grid.arr).reduce((acc, curr) => {
       acc[curr] = true;
       return acc;
     }, {});
 
     this.state = {
       CheckBoxGroup: objCheckBoxGroup
-
-      /*{
-
-        id: true,
-        name: true,
-        GDP: false
-      }*/
     }
   }
 
   handleCheckBox(event) {
     let object = Object.assign(this.state.CheckBoxGroup);
     object[event.target.value] = event.target.checked;
-    this.setState({CheckBoxGroup: object});
+    this.setState(
+      { CheckBoxGroup: object }
+    );
   }
 
   render() {
     return (
-      <form>
+      <div>
+        <form>
+          {this.CheckBoxElems.map(
+            el=>(
+              <label key={el}>
+                {el}
+                <input
+                  type = "checkbox"
+                  value = {el}
+                  checked = {this.state.CheckBoxGroup[el]}
+                  onChange = {this.handleCheckBox}
+                  />
+              </label>)
+            )
+          }
+        </form>
 
+        <table>
+          <tbody>
+            {this.props.grid.arr.map(row => <TableRow key={row.id} row={row} columnsObj={this.state.CheckBoxGroup} />)}
+          </tbody>
+        </table>
 
-        <label>
-          <input
-            type = "checkbox"
-            value = "id"
-            checked = {this.state.CheckBoxGroup.id}
-            onChange = {this.handleCheckBox}
-          />
-        </label>
-
-
-        <input
-          type = "checkbox"
-          value = "name"
-          checked = {this.state.CheckBoxGroup.name}
-          onChange = {this.handleCheckBox}
-        />
-        <input
-          type = "checkbox"
-          value = "GDP"
-          checked = {this.state.CheckBoxGroup.GDP}
-          onChange = {this.handleCheckBox}
-        />
-      </form>
+        <h4>Creation date: {(new Date()).toDateString()}</h4>
+      </div>
     )
   }
 }

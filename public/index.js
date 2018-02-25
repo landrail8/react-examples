@@ -27708,11 +27708,7 @@ var _getData = __webpack_require__(357);
 
 var _getData2 = _interopRequireDefault(_getData);
 
-var _ObjGrid = __webpack_require__(358);
-
-var _ObjGrid2 = _interopRequireDefault(_ObjGrid);
-
-var _SelectionColumns = __webpack_require__(359);
+var _SelectionColumns = __webpack_require__(358);
 
 var _SelectionColumns2 = _interopRequireDefault(_SelectionColumns);
 
@@ -27723,8 +27719,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-//import SortableTable from './SortableTable';
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -27817,57 +27811,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(51);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ObjGrid = function ObjGrid(props) {
-  var grid = props.grid;
-
-
-  var gridElems = grid.arr.map(function (elem) {
-    return _react2.default.createElement(
-      'li',
-      null,
-      elem.id,
-      ' : ',
-      elem.name
-    );
-  });
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h2',
-      null,
-      grid.nameGrid
-    ),
-    gridElems,
-    _react2.default.createElement(
-      'h4',
-      null,
-      'Creation date: ',
-      new Date().toDateString()
-    )
-  );
-};
-
-exports.default = ObjGrid;
-
-/***/ }),
-/* 359 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(51);
@@ -27882,40 +27825,26 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ObjGrid = function ObjGrid(props) {
-  var grid = props.grid;
-
-
-  var gridElems = grid.arr.map(function (elem) {
-    return _react2.default.createElement(
-      "li",
-      null,
-      elem.id,
-      " : ",
-      elem.name
-    );
-  });
-
-  return _react2.default.createElement(
-    "div",
-    null,
-    _react2.default.createElement(
-      "h2",
-      null,
-      grid.nameGrid
-    ),
-    gridElems,
-    _react2.default.createElement(
-      "h4",
-      null,
-      "Creation date: ",
-      new Date().toDateString()
-    )
-  );
-};
-
 var getColumns = function getColumns(arr) {
   return Object.keys(arr[0]);
+};
+
+var TableRow = function TableRow(_ref) {
+  var row = _ref.row,
+      columnsObj = _ref.columnsObj;
+  return _react2.default.createElement(
+    "tr",
+    null,
+    Object.keys(columnsObj).filter(function (curr) {
+      return columnsObj[curr];
+    }).map(function (curr) {
+      return _react2.default.createElement(
+        "td",
+        { key: row[curr] },
+        row[curr]
+      );
+    })
+  );
 };
 
 var SelectionColumns = function (_React$Component) {
@@ -27931,19 +27860,15 @@ var SelectionColumns = function (_React$Component) {
     var grid = props.grid;
 
 
-    var objCheckBoxGroup = getColumns(grid).reduce(function (acc, curr) {
+    _this.CheckBoxElems = getColumns(grid.arr);
+
+    var objCheckBoxGroup = getColumns(grid.arr).reduce(function (acc, curr) {
       acc[curr] = true;
       return acc;
     }, {});
 
     _this.state = {
       CheckBoxGroup: objCheckBoxGroup
-
-      /*{
-         id: true,
-        name: true,
-        GDP: false
-      }*/
     };
     return _this;
   }
@@ -27958,31 +27883,45 @@ var SelectionColumns = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
-        "form",
+        "div",
         null,
         _react2.default.createElement(
-          "label",
+          "form",
           null,
-          _react2.default.createElement("input", {
-            type: "checkbox",
-            value: "id",
-            checked: this.state.CheckBoxGroup.id,
-            onChange: this.handleCheckBox
+          this.CheckBoxElems.map(function (el) {
+            return _react2.default.createElement(
+              "label",
+              { key: el },
+              el,
+              _react2.default.createElement("input", {
+                type: "checkbox",
+                value: el,
+                checked: _this2.state.CheckBoxGroup[el],
+                onChange: _this2.handleCheckBox
+              })
+            );
           })
         ),
-        _react2.default.createElement("input", {
-          type: "checkbox",
-          value: "name",
-          checked: this.state.CheckBoxGroup.name,
-          onChange: this.handleCheckBox
-        }),
-        _react2.default.createElement("input", {
-          type: "checkbox",
-          value: "GDP",
-          checked: this.state.CheckBoxGroup.GDP,
-          onChange: this.handleCheckBox
-        })
+        _react2.default.createElement(
+          "table",
+          null,
+          _react2.default.createElement(
+            "tbody",
+            null,
+            this.props.grid.arr.map(function (row) {
+              return _react2.default.createElement(TableRow, { key: row.id, row: row, columnsObj: _this2.state.CheckBoxGroup });
+            })
+          )
+        ),
+        _react2.default.createElement(
+          "h4",
+          null,
+          "Creation date: ",
+          new Date().toDateString()
+        )
       );
     }
   }]);
